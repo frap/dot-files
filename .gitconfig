@@ -1,0 +1,20 @@
+[alias]
+	i = init
+	s = status
+	p = push
+	a = add
+	c = commit -am
+	b = branch
+
+	ra = remote add
+	po = push origin
+	co = checkout
+
+	pom = push origin master
+
+[url "https://github.com/"]
+	insteadOf = gh:
+
+[user]
+	email = agasson@red-elvis.net
+	name = Andrés Gasson
