@@ -203,12 +203,12 @@ function tre() {
 #-----------------------------------------------------------#
 # find largest files below this point
 function flf {
-  find . -ls | sort -nrk7 | head −n 10
+  find . -ls | sort -nrk7 | head −n10
 }
 #-----------------------------------------------------------#
 # find largest directories consuming space below this point
 function fld {
-  du -H . | sort -n | tail −n 10
+  du -h . | sort -n | tail −n10
 }
 #-----------------------------------------------------------#
 function bdump {
@@ -223,7 +223,7 @@ function bdump {
 # This line imports an OS specific functions file if one exists
 # Not been tested on any OS other than Mac OSX
 # TODO: find a better way than uname to distinguish between linux distros
-[ -f ".functions.$( uname )" ] && source ".functions.$( uname )"
+[ -f ".functions.$( uname -s )" ] && source ".functions.$( uname -sfld )"
 
 # This should be the last line of the file
 # For local changes

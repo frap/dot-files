@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # This is a temporary solution to seperate the OS specific stuff out
 # TODO: Either make this solution robust or find something else
 
