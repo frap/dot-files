@@ -14,7 +14,7 @@ QUIET         = @
 dotfiles-log    := ./dotfiles-update.log
 update-host     = localhost
 
-rsync-opts    :=-avPz -e "ssh -i ~/.ssh/id_rsa"
+rsync-opts    :=-avp
 excl-git      := --exclude=".git/"
 excl-node     := --exclude="node_modules"
 excl-archive  := --exclude="*gz,*zip"
@@ -35,7 +35,7 @@ all: sync-completed
 .PHONY: config/
 config/:
 	echo "### $(date) --> Sending dotfiles to ${update-host}  ***" >> ${dotfiles-log}
-	${QUIET}rsync ${rsync-opts} $< atearoot@${update-host}:
+	${QUIET}rsync ${rsync-opts} $@ atearoot@${update-host}:
 
 sync-completed: config/
 	echo "*** $(date) --> Updated dotfiles to $(update-host)  ***" >> ${dotfiles-log}

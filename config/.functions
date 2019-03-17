@@ -203,12 +203,12 @@ function tre() {
 #-----------------------------------------------------------#
 # find largest files below this point
 function flf {
-  find . -ls | sort -nrk7 | head −n10
+  find . -ls | sort -nrk7 | head −n 10
 }
 #-----------------------------------------------------------#
 # find largest directories consuming space below this point
 function fld {
-  du -h . | sort -n | tail −n10
+  du -h . | sort -n | tail −n 10
 }
 #-----------------------------------------------------------#
 function bdump {
@@ -216,9 +216,63 @@ function bdump {
     cd /u01/app/oracle/diag/rdbms/orcl/orcl/trace
   elif [ $ORACLE_SID = "XE" ]; then
     cd /u01/app/oracle/diag/rdbms/xe/XE/trace
+ elif [ $ORACLE_SID = "XEPDB1" ]; then
+    cd /opt/oracle/diag/rdbms/xe/XE/trace
   fi
   pwd
 }
+
+function ediff() {
+      if [ -z "$2" ]
+      then
+          echo "USAGE: ediff <FILE 1> <FILE 2>"
+      else
+          # The --eval flag takes lisp code and evaluates it with EMACS
+          emacsclient -c --eval "(ediff-files \"$1\" \"$2\")"
+      fi
+}
+
+# f Wrapper around 'find' that excludes some useless directories
+function findit {
+      START_PATH='.'
+      FILES="$*"
+
+      # If we have a phrase src/../nav.handlebars, then we want to look
+      # in the 'src' directory for the filename given:
+      if echo "$1" | grep '\.\.' >/dev/null
+      then
+          set $(echo "$1" | sed 's/\/*\.\.\/*/  /');
+      fi
+
+      # If the first option is a directory, then look in that path, otherwise,
+      # start searching from the current directory.
+      if [ -d "$1" -a -n "$2" ]
+      then
+          START_PATH=$1
+          shift
+          FILES="$*"
+      fi
+
+      # Ignore the classes and .git directories, as well as look for every
+      # file name given.
+      find $START_PATH \
+          -not \( -path '*classes*' -or -path '*node_modules*' -or -path '.git*' \) \
+          -and -iname $(perl -e 'print join " -o -iname ", @ARGV' $FILES)
+  }
+alias f='noglob findit'
+
+
+#If you want to gather data from the output, but starting with a
+#particular line, and ending with another, use =clip=. For instance:
+# nmap -A 192.168.0.1 | clip 'PORT ' 'Service detection performed'
+  function clip {
+    FIRST=$1
+    ENDING=$2
+    PADDING=${3:-""}
+
+    perl -ne "\$s=1 if (/$FIRST/); \$s=0 if (/$ENDING/); print \"$PADDING\$_\" if (\$s==1);"
+  }
+
 
 # This line imports an OS specific functions file if one exists
 # Not been tested on any OS other than Mac OSX

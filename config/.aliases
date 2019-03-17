@@ -25,6 +25,16 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+if which gls >/dev/null 2>&1
+  then
+      alias ls="gls --color"
+      alias ll="gls --color -olhA"
+  else
+      alias ls="ls --color"
+      alias ll="ls --color -olhA"
+  fi
+
+alias sshf='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
 
 # ---------------------------------
 # Git specific aliases

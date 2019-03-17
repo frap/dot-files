@@ -1,27 +1,26 @@
 #!/usr/bin/env bash
 # This file is loaded by many shells, including graphical ones.
-
 export PATH="$HOME/.local/bin:$PATH"
 
 case "$(uname -s)" in
 
    Darwin)
-     OSTYPE="Mac"
+     ON_A_MAC="Mac"
      ;;
 
    Linux)
-     OSTYPE="Penquin"
+     ON_LINOS="Penquin"
      ;;
 
    CYGWIN*|MINGW32*|MSYS*)
-     OSTYPE="Crap"
+     ON_CRAP="Crap"
      ;;
 
    # Add here more strings to compare
    # See correspondence table at the bottom of this answer
 
    *)
-     OSTYPE='Wierd%'
+     OSTYPE='Wierd%hit'
      ;;
 esac
 
@@ -33,7 +32,7 @@ for file in ~/.{path,bash_prompt,exports,aliases,functions,extra}; do
 done;
 unset file;
 
-if [ "OSTYPE" == "Mac" ]; then
+if [ "ON_A_MAC" == "Mac" ]; then
 
     # Case-insensitive globbing (used in pathname expansion)
     shopt -s nocaseglob;
@@ -80,7 +79,5 @@ export EDITOR="editor"
 export VISUAL="$EDITOR"
 export ALTERNATE_EDITOR=""
 
-export GOPATH="$HOME/Dev/go"
-
 # Don't make edits below this
-[[ -f "~/.bash_profile.local" ]] && source "~/.bash_profile.local"
+[ -f "~/.bash_profile.local" ] && source "~/.bash_profile.local"

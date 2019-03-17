@@ -1,5 +1,3 @@
-#!/usr/bin/env bash
-
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
@@ -10,12 +8,12 @@ export LESS=" -R "
 # coloured GCC warnings and errors
 export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
 
-[ -x "$HOME/Dev"] && export PATH_TO_DEV="$HOME/Dev"
+export PATH_TO_DEV="$HOME/Dev"
 
 #NVM
 [ -x "$HOME/.nvm" ] && export NVM_DIR="$HOME/.nvm"
 [ -x "/atea/home/atearoot" ] && export NVM_DIR="/atea/home/atearoot/.nvm" #bug with nvm and linked directories
-[[ -s "$NVM_DIR/nvm.sh" ]] && source "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
 
 #GO
 [ -x "$PATH_TO_DEV/go" ] && export GOPATH="$PATH_TO_DEV/go" && export PATH="$GOPATH:$PATH"
@@ -24,8 +22,10 @@ export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quo
 [ -x "/u01/app/oracle/product/11.2.0/xe" ] && export TWO_TASK="localhost:1521/XE"
 # ORACLE 12.2
 [ -x "/u01/app/oracle/12.2.0.1/atea" ] && export TWO_TASK="localhost:1521/orcl"
+# ORACLE XE 18.4
+[ -x "/opt/oracle/product/18c/dbhomeXE" ] && export TWO_TASK="localhost:1521/orcl"
 # SQLCL
-[ -x "/u01/sqlcl/bin" ] && export SQL_PATH="/u01/sqlcl/bin" && export PATH="$SQL_PATH:$PATH"
+[ -x "/opt/sqlcl/bin" ] && export SQL_PATH="/opt/sqlcl/bin" && export PATH="$SQL_PATH:$PATH"
 unset ORACLE_HOME # for sqlcl sealed jdbc error
 
 # INFORMIX node
@@ -33,7 +33,7 @@ unset ORACLE_HOME # for sqlcl sealed jdbc error
 
 # SDKMAN
 [ -x $HOME/.sdkman ] && export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # This should be the last line of the file
 # For local changes
