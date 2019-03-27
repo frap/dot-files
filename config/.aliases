@@ -10,29 +10,36 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias '?=man'
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
+if which gls >/dev/null 2>&1
+  then
+      Alias ls="gls --color"
+      alias ll="gls --color -alhFtr"
+      alias  l="gls --color -alhF"
+      alias lls="gls --color -alhSr"
+      alias la="gls --color -Atr"
+      alias dir="gls --color=auto"
+  else
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
     alias ll='ls -alhFtr'
+    alias  l="ls -alhF"
     alias lls='ls -alhSr'
     alias la='ls -Atr'
     alias dir='dir --color=auto'
     alias vdir='vdir --color=auto'
+  fi
 
+#-------------------------------
+# ripgrep
+#-------------------------------
+if which rg >/dev/null 2>&1
+  then
+    alias grep="rg"
+  else
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
-
-if which gls >/dev/null 2>&1
-  then
-      alias ls="gls --color"
-      alias ll="gls --color -olhA"
-  else
-      alias ls="ls --color"
-      alias ll="ls --color -olhA"
-  fi
 
 alias sshf='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
 
