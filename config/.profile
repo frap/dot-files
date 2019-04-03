@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
 # This file is loaded by many shells, including graphical ones.
-export PATH="$HOME/.local/bin:$PATH"
 
-#------------------ rust installed -------
-if [ -d "${HOME}/.cargo"]
+#-------- Check if rust installed -------
+if [ -d $HOME/.cargo ]
 then
-    export PATH="$HOME/.cargo/bin:$PATH"
+    PATH="$HOME/.cargo/bin:$PATH"
 fi
 
-#----------------- check what we are on --
+#--- Check what type of Machine we are on --
 case "$(uname -s)" in
 
    Darwin)
@@ -46,11 +45,13 @@ for file in ~/.{path,bash_prompt,exports,aliases,functions,extra}; do
 done;
 unset file;
 
+export PATH="$HOME/.local/bin:$PATH"
 # -n => string is not null
 # -z => string is null, has 0 length
 # -a => logical and, exp1 -a exp2 returns true if both exp1 and  exp2 are true
 # -o => logical or,  exp1 -o exp2 returns true if      exp1 *or* exp2 are true
-if [  -n "ON_A_MAC"  ]; then
+if [ -n "$ON_A_MAC" ]
+then
 
     # Case-insensitive globbing (used in pathname expansion)
     shopt -s nocaseglob;
@@ -69,8 +70,8 @@ if [  -n "ON_A_MAC"  ]; then
     done;
 
     # Add tab completion for many Bash commands
-    export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
-    [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+    [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && export BASH_COMPLETION_COMPAT_DIR="/usr/local/etc/bash_completion.d"
+    [[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && source "/usr/local/etc/profile.d/bash_completion.sh"
 
 
     # Enable tab completion for `g` by marking it as an alias for `git`
@@ -91,9 +92,10 @@ if [  -n "ON_A_MAC"  ]; then
     # For local changes
 fi
 
-if [  -n "ON_LINOS"  ]; then
+if [ -n "$ON_LINOS" ]
+then
     # Add tab completion for many Bash commands
-    [[ -r "/etc/profile.d/bash_completion.sh" ]] && . "/etc/profile.d/bash_completion.sh"
+    [[ -r "/etc/profile.d/bash_completion.sh" ]] && source "/etc/profile.d/bash_completion.sh"
 fi
 # ------------- standard editor settings ---
 export EDITOR="editor"
@@ -101,4 +103,4 @@ export VISUAL="$EDITOR"
 export ALTERNATE_EDITOR=""
 
 # Don't make edits below this
-[ -f "${HOME}/.bash_profile.local" ] && source "${HOME}/.bash_profile.local"
+[ -f "$HOME/.bash_profile.local" ] && source "$HOME/.bash_profile.local"

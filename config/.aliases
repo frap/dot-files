@@ -22,7 +22,7 @@ if which gls >/dev/null 2>&1
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
     alias ll='ls -alhFtr'
-    alias  l="ls -alhF"
+    alias  l='ls -alhF'
     alias lls='ls -alhSr'
     alias la='ls -Atr'
     alias dir='dir --color=auto'
@@ -34,7 +34,7 @@ if which gls >/dev/null 2>&1
 #-------------------------------
 if which rg >/dev/null 2>&1
   then
-    alias grep="rg"
+    alias grep='rg'
   else
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
@@ -65,9 +65,9 @@ alias nid='npm install -D'
 alias macaddress="docker inspect --format '{{ range .NetworkSettings.Networks}}{{.MacAddress }}{{end}}'"
 alias ipaddress="docker inspect --format '{{ range .NetworkSettings.Networks}}{{.IPAddress }}{{end}}'"
 alias logpath="docker inspect --format='{{.LogPath}}'"
-alias dsl="docker stack ls"
-alias dss="docker stack services"
-alias dsp="docker stack ps"
+alias dsl='docker stack ls'
+alias dss='docker stack services'
+alias dsp='docker stack ps'
 
 # ---------------------------------
 # Python virtual env aliases
@@ -82,13 +82,13 @@ alias vac='source .venv/bin/activate'
 # systemd specific aliases
 # ---------------------------------
 if [ -x /etc/systemd ]; then
-   alias tt='journalctl -u tomcat -o cat -f'
+   alias tt='sudo journalctl -u tomcat -o cat -f'
    alias tomcattail=tt
-   alias tt2day='journalctl -u tomcat -o cat -S today'
-   alias tt2min='journalctl -u tomcat -o cat -S "2 minutes ago"'
-   alias tt5min='journalctl -u tomcat -o cat -S "5 minutes ago"'
+   alias tt2day='sudo journalctl -u tomcat -o cat -S today'
+   alias tt2min='sudo journalctl -u tomcat -o cat -S "2 minutes ago"'
+   alias tt5min='sudo journalctl -u tomcat -o cat -S "5 minutes ago"'
 
-   alias tcrst='systemctl restart tomcat'
+   alias tcrst='sudo systemctl restart tomcat'
    alias restarttomcat=tcrst
 fi
 
@@ -103,4 +103,4 @@ alias topm="ps -e -o pmem,pid,user,tty,args | sort -n -k 1 -r | head"
 # This should be the last line of the file
 # For local changes
 # Don't make edits below this
-[ -f ".aliases.local" ] && source ".aliases.local"
+[ -f "${HOME}/.aliases.local" ] && source "${HOME}/.aliases.local"

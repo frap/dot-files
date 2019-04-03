@@ -12,8 +12,9 @@ thisfile := $(location)
 
 QUIET         = @
 dotfiles-log    := ./dotfiles-update.log
-update-host     = localhost
+update-host     = tsp18-base
 
+hostname      := $(shell hostname -s)
 rsync-opts    :=-avp
 excl-git      := --exclude=".git/"
 excl-node     := --exclude="node_modules"
@@ -32,10 +33,15 @@ help : ${thisfile}
 .PHONY: all
 all: sync-completed
 
-.PHONY: config/
-config/:
-	echo "### $(date) --> Sending dotfiles to ${update-host}  ***" >> ${dotfiles-log}
-	${QUIET}rsync ${rsync-opts} $@ atearoot@${update-host}:
+.PHONY: ${update-host}
+${update-host}:
+	${QUIET}echo "### $(date) --> Updating dotfiles on ${update-host}  ***"
+	${QUIET}rsync ${rsync-opts} config/ atearoot@${update-host}:
 
-sync-completed: config/
-	echo "*** $(date) --> Updated dotfiles to $(update-host)  ***" >> ${dotfiles-log}
+.PHONY: localhost
+localhost:
+	${QUIET}echo "### $(date) --> Updating dotfiles on localhost  ***"
+	${QUIET}rsync ${rsync-opts} config/ ${HOME}/
+
+sync-completed: ${update-host} localhost
+	${QUIET}echo "*** $(date) --> Updated dotfiles to $(update-host) & $(hostname)  ***"

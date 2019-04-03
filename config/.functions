@@ -41,12 +41,14 @@ function targz() {
 
 # Determine size of a file or total size of a directory
 function fs() {
-	if du -b /dev/null > /dev/null 2>&1; then
+	if du -b /dev/null > /dev/null 2>&1
+    then
 		local arg=-sbh;
 	else
 		local arg=-sh;
 	fi
-	if [[ -n "$@" ]]; then
+	if [[ -n "$@" ]]
+    then
 		du $arg -- "$@";
 	else
 		du $arg .[^.]* ./*;
@@ -55,7 +57,8 @@ function fs() {
 
 # Use Git’s colored diff when available
 hash git &>/dev/null;
-if [ $? -eq 0 ]; then
+if [ $? -eq 0 ]
+then
 	function diff() {
 		git diff --no-index --color-words "$@";
 	}
@@ -64,7 +67,8 @@ fi;
 # Create a data URL from a file
 function dataurl() {
 	local mimeType=$(file -b --mime-type "$1");
-	if [[ $mimeType == text/* ]]; then
+	if [[ $mimeType == text/* ]]
+    then
 		mimeType="${mimeType};charset=utf-8";
 	fi
 	echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')";
@@ -89,11 +93,13 @@ function gz() {
 }
 
 function extract {
- if [ -z "$1" ]; then
+    if [ -z "$1" ]
+    then
     # display usage if no parameters given
     echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
  else
-    if [ -f $1 ] ; then
+     if [ -f $1 ]
+     then
         # NAME=${1%.*}
         # mkdir $NAME && cd $NAME
         case $1 in
@@ -128,7 +134,8 @@ function digga() {
 # Show all the names (CNs and SANs) listed in the SSL certificate
 # for a given domain
 function getcertnames() {
-	if [ -z "${1}" ]; then
+	if [ -z "${1}" ]
+    then
 		echo "ERROR: No domain specified.";
 		return 1;
 	fi;
@@ -140,7 +147,8 @@ function getcertnames() {
 	local tmp=$(echo -e "GET / HTTP/1.0\nEOT" \
 		| openssl s_client -connect "${domain}:443" -servername "${domain}" 2>&1);
 
-	if [[ "${tmp}" = *"-----BEGIN CERTIFICATE-----"* ]]; then
+	if [[ "${tmp}" = *"-----BEGIN CERTIFICATE-----"* ]]
+    then
 		local certText=$(echo "${tmp}" \
 			| openssl x509 -text -certopt "no_aux, no_header, no_issuer, no_pubkey, \
 			no_serial, no_sigdump, no_signame, no_validity, no_version");
@@ -161,7 +169,8 @@ function getcertnames() {
 
 # Normalize `open` across Linux, macOS, and Windows.
 # This is needed to make the `o` function (see below) cross-platform.
-if [ ! $(uname -s) = 'Darwin' ]; then
+if [ ! $(uname -s) = 'Darwin' ]
+then
 	if grep -q Microsoft /proc/version; then
 		# Ubuntu on Windows using the Linux subsystem
 		alias open='explorer.exe';
@@ -173,7 +182,8 @@ fi
 # `o` with no arguments opens the current directory, otherwise opens the given
 # location
 function o() {
-	if [ $# -eq 0 ]; then
+	if [ $# -eq 0 ]
+    then
 		open .;
 	else
 		open "$@";
@@ -197,8 +207,8 @@ function tre() {
   } # envs
 #-----------------------------------------------------------#
 # login to sqlplus
-  function sp {
-    time sql "/ as sysdba"
+  function sql+ {
+    time sqlplus "/ as sysdba"
   }
 #-----------------------------------------------------------#
 # find largest files below this point
@@ -212,14 +222,17 @@ function fld {
 }
 #-----------------------------------------------------------#
 function bdump {
-  if [ $ORACLE_SID = "orcl" ]; then
+    if [ $ORACLE_SID = "orcl" ]
+    then
     cd /u01/app/oracle/diag/rdbms/orcl/orcl/trace
-  elif [ $ORACLE_SID = "XE" ]; then
+    elif [ $ORACLE_SID = "XE" ]
+    then
     cd /u01/app/oracle/diag/rdbms/xe/XE/trace
- elif [ $ORACLE_SID = "XEPDB1" ]; then
+    elif [ $ORACLE_SID = "XEPDB1" ]
+    then
     cd /opt/oracle/diag/rdbms/xe/XE/trace
-  fi
-  pwd
+    fi
+    pwd
 }
 
 function ediff() {
