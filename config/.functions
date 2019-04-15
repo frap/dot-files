@@ -290,7 +290,7 @@ alias f='noglob findit'
 # This line imports an OS specific functions file if one exists
 # Not been tested on any OS other than Mac OSX
 # TODO: find a better way than uname to distinguish between linux distros
-[ -f ".functions.$( uname -s )" ] && source ".functions.$( uname -sfld )"
+[ -f ".functions.$( uname -s )" ] && source ".functions.$( uname -s )"
 
 # This should be the last line of the file
 # For local changes
